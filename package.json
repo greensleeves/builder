@@ -1,0 +1,42 @@
+{
+  "name": "rgru",
+  "version": "1.0.0",
+  "description": "rgru frontend",
+  "main": "webpack.config.js",
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-flow": "^6.23.0",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.4.1",
+    "eslint-loader": "^1.9.0",
+    "flow-bin": "^0.53.1",
+    "flowtype-loader": "^0.2.2",
+    "gulp": "^3.9.1",
+    "gulp-from-config": "git+https://github.com/nanomen/gulp-from-config.git",
+    "gulp-rename": "^1.2.2",
+    "node-sass": "^4.5.3",
+    "ramda": "^0.24.1",
+    "sass-loader": "^6.0.6",
+    "vue": "^2.4.2",
+    "vue-loader": "^13.0.4",
+    "vue-router": "^2.7.0",
+    "vue-rx": "^3.3.0",
+    "vue-template-compiler": "^2.4.2",
+    "vuex": "^2.3.1",
+    "webpack": "^3.5.4",
+    "webpack-stream": "^4.0.0"
+  },
+  "scripts": {},
+  "author": "rg team",
+  "license": "MIT",
+  "homepage": "https://github.com/RGRU",
+  "dependencies": {
+    "ramda": "^0.24.1",
+    "rxjs": "^5.4.3"
+  }
+}

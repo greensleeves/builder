@@ -1,0 +1,5 @@
+{
+    "presets": ["env", "flow"],
+    "plugins": ["transform-flow-strip-types"],
+    "compact": true
+}
