@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'tmpl',
+    name: 'tmpls',
     subTasks: [
 
         {

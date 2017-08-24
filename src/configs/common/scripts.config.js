@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'script',
+    name: 'scripts',
     subTasks: [
 
         {
