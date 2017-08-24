@@ -42,13 +42,10 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-$color: tomato
+
+$color: black
 
 div
     color: $color
-
-    p
-        font-weight: bold
-        color: black
 
 </style>

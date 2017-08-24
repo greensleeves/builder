@@ -3,16 +3,11 @@
 // import { Observable } from 'rxjs/Rx';
 
 import Vue from 'vue';
-import App from '../blocks/main/app/scripts/App.vue';
+import Article from '../blocks/main/article/scripts/Article.vue';
 
 /**
  * Тестирование RxJS
  */
 // Observable.of(100).subscribe(console.log);
 
-console.log(1);
-
-/**
- * Инициализация компонента
- */
-new Vue(App).$mount('#app');
+new Vue(Article).$mount('#app');

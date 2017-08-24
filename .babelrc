@@ -1,5 +1,5 @@
 {
     "presets": ["env", "flow"],
-    "plugins": ["transform-flow-strip-types"],
+    "plugins": ["transform-flow-strip-types", "syntax-dynamic-import"],
     "compact": true
 }
