@@ -9,7 +9,8 @@ module.exports = {
             },
             src: {
                 include: [
-                    './src/scripts/index.js'
+                    './src/scripts/index.js',
+                    './src/scripts/popup.js'
                 ]
             },
             plugins: [
@@ -22,4 +23,4 @@ module.exports = {
         }
 
     ]
-}
+};

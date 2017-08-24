@@ -35,6 +35,14 @@ module.exports = {
             },
 
             {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+
+            {
                 test: /\.vue$/,
                 use: {
                     loader: 'vue-loader'
@@ -67,6 +75,12 @@ module.exports = {
         // Задержка перед тем, как пересобрать файлы
         // По-умолчанию 300ms
         aggregateTimeout: 100
+    },
+
+    resolve: {
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }
     }
 
 };

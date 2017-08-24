@@ -11,7 +11,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
     "cross-env": "^5.0.5",
-    "css-loader": "^0.28.4",
+    "css-loader": "^0.28.5",
     "eslint": "^4.4.1",
     "eslint-loader": "^1.9.0",
     "flow-bin": "^0.53.1",
@@ -22,6 +22,7 @@
     "node-sass": "^4.5.3",
     "ramda": "^0.24.1",
     "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
     "vue": "^2.4.2",
     "vue-loader": "^13.0.4",
     "vue-router": "^2.7.0",
@@ -37,6 +38,7 @@
   "homepage": "https://github.com/RGRU",
   "dependencies": {
     "ramda": "^0.24.1",
-    "rxjs": "^5.4.3"
+    "rxjs": "^5.4.3",
+    "tingle.js": "^0.11.0"
   }
 }
