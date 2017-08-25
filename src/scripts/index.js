@@ -1,16 +1,17 @@
 // @flow
 
-// import { Observable } from 'rxjs/Rx';
-
 import Vue from 'vue';
 import App from '../blocks/main/app/scripts/App.vue';
+import log from './modules/tools/log';
 
 /**
  * Тестирование RxJS
  */
-// Observable.of(100).subscribe(console.log);
 
-console.log(1);
+log(['Привет', { a: 2 }]);
+log(['Привет', 2, 'рама', 'ramda'], 'info');
+log([2, 'ошибка'], 'error');
+
 
 /**
  * Инициализация компонента
