@@ -10,7 +10,10 @@
 [options]
 # \([\/\.a-zA-Z-]\)+ это регулярка для любых модулей
 
-module.name_mapper='vue' -> '<PROJECT_ROOT>/flow/VueModule.js.flow'
-module.name_mapper='vue-router' -> '<PROJECT_ROOT>/flow/VueRouterModule.js.flow'
-module.name_mapper='ramda\([\/a-zA-Z]\)*' -> '<PROJECT_ROOT>/flow/RamdaModule.js.flow'
-module.name_mapper='rxjs\([\/a-zA-Z]\)*' -> '<PROJECT_ROOT>/flow/RxjsModule.js.flow'
+module.name_mapper='vue' -> '<PROJECT_ROOT>/src/configs/flow/VueModule.js.flow'
+module.name_mapper='vue-router' -> '<PROJECT_ROOT>/src/configs/flow/VueRouterModule.js.flow'
+module.name_mapper='ramda\([\/a-zA-Z]\)*' -> '<PROJECT_ROOT>/src/configs/flow/RamdaModule.js.flow'
+module.name_mapper='rxjs\([\/a-zA-Z]\)*' -> '<PROJECT_ROOT>/src/configs/flow/RxjsModule.js.flow'
+
+# Обработка VUE файлов
+module.name_mapper.extension='vue' -> '<PROJECT_ROOT>/src/configs/flow/VueModule.js.flow'

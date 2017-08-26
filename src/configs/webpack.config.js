@@ -9,7 +9,9 @@ const
 module.exports = {
 
     output: {
-        filename: '[name].js'
+        publicPath: path.join(path.resolve(__dirname, '../..'), 'dest/scripts/'),
+        filename: '[name].js',
+        chunkFilename: '[hash].js',
     },
 
     module: {
@@ -39,6 +41,15 @@ module.exports = {
                 use: [
                     'style-loader',
                     'css-loader'
+                ]
+            },
+
+            {
+                test: /\.sass$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'sass-loader'
                 ]
             },
 
