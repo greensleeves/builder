@@ -16,30 +16,16 @@
 
     // Добавляем глобальные переменные
     "globals": {
-        "RG": true,
-        "$": true,
-        "jQuery": true,
-        "_": true,
         "Ya": true,
-        "Ractive": true,
-        "Quill": true,
-        "Waypoint": true,
-        "DocumentTouch": true,
         "_tmr": true,
         "_ttf": true,
         "yaCounter22322746": true,
         "ga": true,
-        "moment": true,
-        "Lockr": true,
-        "Cookies": true,
-        "PubSub": true,
         "jwplayer": true,
         "SeedrPlayer": true,
         "_sf_endpt": true,
         "_sf_async_config": true,
-        "io": true,
         "Promise": true,
-        "fetchJsonp": true,
         "tingle": true
     },
 
@@ -103,11 +89,9 @@
         // http://eslint.org/docs/rules/no-cond-assign
         "no-cond-assign": [2, "always"],
 
-        // Разрешаем использовать вызов консоли (только log)
-        "no-console": [2, {
-                allow: ["log", "debug", "error"]
-            }
-        ],
+        // Запрещаем использовать консоль
+        // https://eslint.org/docs/rules/no-console
+        "no-console": 2,
 
         // Запрещаем использовать alert
         // http://eslint.org/docs/rules/no-alert
