@@ -44,7 +44,7 @@ sixthExamplePopup = Popup.makePopup();
 /**
  * Инициализация компонента
  */
-// new Vue(App).$mount('#app');
+new Vue(App).$mount('#app');
 
 myComponent = Vue.extend({
     data: function() {
@@ -55,6 +55,7 @@ myComponent = Vue.extend({
             message: 'My component!',
             id: 100001613004229,
             users: [
+                4,
                 100001613004229,
                 100009671689801
             ]
