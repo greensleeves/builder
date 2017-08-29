@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Попапы</title>
+</head>
+<body>
+
+<div id="popup">
+    <ul class="list">
+        <li class="list__item">
+            <h2>Первый пример</h2>
+            <ul class="sublist">
+                <li class="sublist__item">Инициализация модального окна с контентом по умолчанию.</li>
+                <li class="sublist__item">Вставка нового контента в модальное окно через определенное время.</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="firstExample">Открой первый попап</button>
+        </li>
+
+        <li class="list__item">
+            <h2>Второй пример</h2>
+            <ul class="sublist">
+                <li class="sublist__item">Инициализация модального окна.</li>
+                <li class="sublist__item">Вставка контента в модальное окно.</li>
+                <li class="sublist__item">Удаление модального окна из дерева dom.</li>
+                <li class="sublist__item">Реинициализация модального окна.</li>
+                <li class="sublist__item">Вставка нового контента в модальное окно через определенное время.</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="secondExample">Открой второй пример</button>
+        </li>
+
+        <li class="list__item">
+            <h2>Третий пример</h2>
+
+            <ul class="sublist">
+                <li class="sublist__item">Инициализация модального окна через метод Popup.makePopup.</li>
+                <li class="sublist__item">Вставка компонента Vue в модальное окно.</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="thirdExample">Открой третий пример</button>
+        </li>
+
+        <li class="list__item">
+            <h2>Четвертый пример</h2>
+            <ul class="sublist">
+                <li class="sublist__item">
+                    Инициализация модального окна через метод Popup.makeSinglePopup,
+                    возвращающий singleton-экземпляр модального окна.
+                </li>
+                <li class="sublist__item">Вставка компонента Vue в модальное окно.</li>
+                <li class="sublist__item">Вставка компонента Vue в футер модального окна.</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="fourthExample">Открой четвертый пример</button>
+        </li>
+
+        <li class="list__item">
+            <h2>Пятый пример</h2>
+            <ul class="sublist">
+                <li class="sublist__item">Открываем несколько модальных окон.</li>
+                <li class="sublist__item">Закрываем их все через определенное время.</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="fifthExample">Открой пятый пример</button>
+        </li>
+
+        <li class="list__item">
+            <h2>Шестой пример</h2>
+            <ul class="sublist">
+                <li class="sublist__item">Открываем пользовательский компонент.</li>
+                <li class="sublist__item">Присутсвует динамический контент.</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="sixthExample">Открой шестой пример</button>
+        </li>
+    </ul>
+</div>
+
+<script src="scripts/modal.js"></script>
+</body>
+</html>

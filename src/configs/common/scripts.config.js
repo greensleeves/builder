@@ -38,7 +38,26 @@ module.exports = {
                     options: webpackConfig
                 }
             ]
+        },
+
+        {
+            name: 'modal',
+            dest: {
+                dev: '/dest/scripts'
+            },
+            src: {
+                include: [
+                    './src/scripts/modal.js'
+                ]
+            },
+            plugins: [
+                { name: 'vinyl-named' },
+                {
+                    name: 'webpack-stream',
+                    options: webpackConfig
+                }
+            ]
         }
 
     ]
-}
+};
