@@ -37,8 +37,35 @@ class Popup {
             closeLabel: null,
             closeMethods: ['overlay', 'button', 'escape'],
 
-            modalContent: 'Default modal content! (^_^)'
+            modalContent: '(✿◠‿◠) Default modal content! (◠‿◠✿)'
         };
+
+
+        // Если еще не создано ни одного модального окна
+        if (!Popup.counter) {
+
+            // Сохраняем счетчик модальных окон через замыкание
+            Popup.counter = (function() {
+
+                let counter = 0;
+                return function() {
+
+                    return counter++;
+
+                };
+
+            })();
+
+            // Инициализируем массив модальных окон
+            Popup.modals = [];
+
+        }
+
+        // Номер модального окна
+        this.counter = Popup.counter();
+
+        // Сохраняем ссылку на экземпляр модального окна
+        Popup.modals.push(this);
 
         // Формируем объект параметров модального окна на основе предустановленных
         this.popupParams = Object.assign({}, defaultParams, params);
@@ -46,11 +73,14 @@ class Popup {
         // ESLint не нравится, когда конструкторы объявлены с маленькой буквы
         this.TingleModal = tingle.modal;
 
+        // Переопределяем методы tingle.js
+        Popup.redefine(this.TingleModal);
+
         // Свойство для хранения экземпляра Vue
         // для рендеринга вне документа при вызове метода setVueComponent
         this.viewModel = {};
 
-        // Инициализируем модальное окно
+        // Инициализируем модальное окно, но не показываем его
         this.init(false);
 
     }
@@ -72,6 +102,7 @@ class Popup {
      * @method open
      *
      * Показывает модальное окно
+     * @returns {Popup}
      */
     open() {
 
@@ -84,7 +115,7 @@ class Popup {
      * @method close
      *
      * Скрывает модальное окно
-     *
+     * @returns {Popup}
      */
     close() {
 
@@ -99,7 +130,7 @@ class Popup {
      * Добавляет контент в popup-блок
      *
      * @param content {String} - Контент, который мы хотим показать в попапе
-     *
+     * @returns {Popup}
      */
     setContent(content = '') {
 
@@ -126,18 +157,51 @@ class Popup {
     }
 
     /**
+     * @method setFooterContent
+     *
+     * Добавляет контент в футер модального окна
+     *
+     * @param content {String} - Контент, который мы хотим показать в футере
+     * @returns {Popup}
+     */
+    setFooterContent(content = '') {
+
+        this.modal.setFooterContent(content);
+        return this;
+
+    }
+
+    /**
      *  @method setVueComponent
      *
      *  Рендерит компонент Vue вне документа,
      *  Помещает компонент Vue в модальное окно
-     *  @param {Object} vueComponent - компонент Vue
+     *  @param {Object} vueComponent - Компонент Vue
+     *  @param {String} target - Место в модальном окне, куда мы вставляем Vue-компонент. (modal: в модальное окно, footer: в футер)
      *
      *  @returns {Popup}
      */
-    setVueComponent(vueComponent) {
+    setVueComponent(vueComponent, target = 'modal') {
 
         this.viewModel = new Vue(vueComponent).$mount();
-        this.setContent(this.viewModel.$el);
+
+        // Помещаем контент в модальное окно
+        // в зависимости от места назначения
+        switch (true) {
+
+            case target === 'footer':
+                this.setFooterContent(this.viewModel.$el);
+                break;
+
+            case target === 'modal':
+                this.setContent(this.viewModel.$el);
+                break;
+
+            default:
+                this.setContent(this.viewModel.$el);
+
+        }
+
 
         return this;
 
@@ -164,6 +228,20 @@ class Popup {
         this.viewModel = {};
         this.setContent();
 
+        return this;
+
+    }
+
+    /**
+     * @method checkOverflow
+     *
+     * Позволяет перестроить модальное окно при загрузке асинхроннного контента
+     *
+     * @returns {Popup}
+     */
+    checkOverflow() {
+
+        this.modal.checkOverflow();
         return this;
 
     }
@@ -211,7 +289,7 @@ class Popup {
      * @method init
      *
      * Инициализация модального окна.
-     * Добавляеn содержимое в модальное окно, показывает его
+     * Добавляет содержимое в модальное окно, показывает его
      *
      * @param {Boolean} open - Отвечает за открытие модального окна при инициализации
      */
@@ -226,11 +304,14 @@ class Popup {
 
             this.modal = new this.TingleModal(popupParams);
 
+            // Добавляем css-класс с идентификтором модального окна
+            this.modal
+                .modal.classList.add('modal-id-' + this.counter);
+
         }
 
         // Добавляем контент
         this.setContent(popupParams.modalContent);
-
 
         // Открываем модальное окно
         if (open) {
@@ -254,6 +335,19 @@ class Popup {
         this.modal.destroy();
         this.modal = null;
         return this;
+
+    }
+
+    /**
+     * @method isOpen
+     *
+     * Проверяет открыто модальное окно или нет
+     *
+     * @returns {Boolean}
+     */
+    isOpen() {
+
+        return this.modal.isOpen();
 
     }
 
@@ -289,6 +383,117 @@ class Popup {
 
         }
         return Popup.singlePopup;
+
+    }
+
+    /**
+     * @static
+     * @method redefine
+     *
+     * Переопределяет методы класса Modal от tingle.js
+     *
+     * @param modal - класс Modal от tingle.js
+     */
+    static redefine(modal) {
+
+        // Переопределяем метод tingle.js setFooterContent
+        modal.prototype.setFooterContent = function(content) {
+
+            // check type of content : String or Node
+            if (typeof content === 'string') {
+
+                this.modalBoxFooter.innerHTML = content;
+
+            } else {
+
+                this.modalBoxFooter.innerHTML = '';
+                this.modalBoxFooter.appendChild(content);
+
+            }
+
+        };
+
+    }
+
+    /**
+     * @static
+     * @method getModalById
+     *
+     * Возвращает экземпляр класса Popup по его id,
+     * Если нет экземпляра с таким id, метод возвратит null
+     *
+     * @param {Number} id - идентификатор экземпляра модального окна
+     * @returns {*}
+     */
+    static getModalById(id) {
+
+        let result = null;
+
+        if (Popup.modals && Popup.modals.length > 0) {
+
+            Popup.modals.forEach(function(currentValue) {
+
+                if (id === currentValue.counter) {
+
+                    result = currentValue;
+                    return false;
+
+                }
+
+                return true;
+
+            });
+
+        }
+
+        return result;
+
+    }
+
+    /**
+     * @static
+     * @method getAllModals
+     *
+     * Возвращает массив с экземплярами класса Popup,
+     * Если массив не определен и в нем нет экземпляров, метод возвратит null
+     *
+     * @returns {*}
+     */
+    static getAllModals() {
+
+        if (Popup.modals && Popup.modals.length > 0) {
+
+            return Popup.modals;
+
+        }
+        return null;
+
+    }
+
+    /**
+     * @static
+     * @method closeAllModals
+     *
+     * Закрывает все открытые модальные окна
+     */
+    static closeAllModals() {
+
+        let allModals;
+
+        allModals = Popup.getAllModals();
+        if (allModals) {
+
+            allModals.forEach(function(currentValue) {
+
+                if (currentValue.isOpen()) {
+
+                    currentValue.close();
+
+                }
+
+            });
+
+        }
 
     }
 
