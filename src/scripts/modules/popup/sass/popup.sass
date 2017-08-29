@@ -1,8 +1,14 @@
 @import "~tingle.js/dist/tingle.min.css"
 
+html
+  background: palegreen
+
 html, body
   margin: 0
   padding: 0
+
+.text-center
+  text-align: center
 
 .tingle-modal
   &__close
@@ -27,12 +33,30 @@ html, body
     &--white
       color: white
 
+
+.tingle-modal
+  &--move
+    position: absolute
+    width: 400px
+    height: 400px
+    top: 76px
+    left: 22px
+    cursor: move
+    cursor: grab
+    cursor: -moz-grab
+    cursor: -webkit-grab
+    border-radius: 10px
+    background: rgba(52, 152, 219, 0.7)
+    .tingle-modal
+      &__close
+        position: absolute
+
+
 .profile
   &.loading
     opacity: 0.2
 
 #popup
-  background: palegreen
   padding: 10px
   ul
     list-style: none
@@ -73,3 +97,21 @@ html, body
         border-radius: 5px
       &:first-child
         margin-top: 0
+
+.square
+  width: 100px
+  height: 100px
+  line-height: 100px
+  font-size: 50px
+  text-align: center
+  margin: 0 auto
+  border-radius: 50px
+  color: #ffffff
+  &--red
+    background: red
+  &--blue
+    background: blue
+  &--green
+    background: green
+  &--orange
+    background: darkorange

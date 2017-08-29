@@ -253,14 +253,24 @@ class Popup {
      *
      * @param {Array} items - Массив элементов контента
      * @param {Number} delay - Время задержки в миллисекундах смены элемента
-     *
+     * @param {Boolean} loop - Зацикливать анимаци, либо нет. По умолчанию false
      * @returns {Popup}
      */
-    sequence(items = [], delay = 5000) {
+    sequence(items = [], delay = 5000, loop = false) {
 
-        let counter, seq;
+        let counter,
+            seq,
+            opts,
+            timeoutId;
+
         counter = 1;
         seq = () => {
+
+            if (counter >= items.length && loop === true) {
+
+                counter = 1;
+
+            }
 
             if (counter < items.length) {
 
@@ -268,9 +278,16 @@ class Popup {
 
                 counter += 1;
 
-                setTimeout(seq, delay);
+                timeoutId = setTimeout(seq, delay);
 
             }
+
+        };
+
+        opts = this.modal.opts;
+        opts.onClose = function() {
+
+            clearTimeout(timeoutId);
 
         };
 
@@ -279,7 +296,7 @@ class Popup {
             this.setContent(items[0]);
 
         }
-        setTimeout(seq, delay);
+        timeoutId = setTimeout(seq, delay);
 
         return this;
 
@@ -383,6 +400,181 @@ class Popup {
 
         }
         return Popup.singlePopup;
+
+    }
+
+    /**
+     * @static
+     * @method makeDraggableModal
+     *
+     * Создает модальное окно, которое можно двигать в пределах body
+     *
+     * @param params  Объект параметров модального окна (см. описание Конструктор класса Popup)
+     * @returns {Popup|*} - Возвращает экзмепляр класса Popup, котоырй можно двигать
+     */
+    static makeDraggableModal(params = {}) {
+
+        let el,
+            modalBox,
+            mouseDown,
+            draggableModal;
+
+        // Экземпляр модального окна
+        draggableModal = Popup.makePopup(params);
+
+        // html-элемент модального окна
+        el = draggableModal.modal.modal;
+        // html-элемент содержимого модального окна
+        modalBox = draggableModal.modal.modalBox;
+
+        /**
+         * @function mouseDown
+         *
+         * Обработчик события нажатия клавиши мыши на элементе модального окна
+         *
+         * @param e
+         */
+        mouseDown = (e) => {
+
+            let coords,
+                shiftX,
+                shiftY,
+                mouseMove,
+                mouseUp,
+                moveAt;
+
+            // Получаем координаты элемента
+            coords = Popup.getCoords(el);
+
+            if (!e.pageX && !e.pageY) {
+
+                e.pageX = e.touches[0].pageX;
+                e.pageY = e.touches[0].pageY;
+
+            }
+
+            // Получаем сдвиг курсора мыши относительно
+            // левого верхнего угла элемента
+            shiftX = e.pageX - coords.left;
+            shiftY = e.pageY - coords.top;
+
+            /**
+             * @function moveAt
+             *
+             * Функция отвечает за движение модального окна в пределах document.body
+             *
+             * @param e
+             */
+            moveAt = (e) => {
+
+                let newLeft,
+                    newTop,
+                    rightEdge,
+                    bottomEdge;
+
+                if (!e.pageX && !e.pageY) {
+
+                    e.pageX = e.touches[0].pageX;
+                    e.pageY = e.touches[0].pageY;
+
+                }
+
+                // Вычисляем левую позицию модального окна
+                newLeft = e.pageX - shiftX;
+                // Вычисляем верхнюю позицию модального окна
+                newTop = e.pageY - shiftY;
+
+                // Не допускаем того, чтобы модальное окно выходило за край
+                if (newLeft < 0) {
+
+                    newLeft = 0;
+
+                }
+                if (newTop < 0) {
+
+                    newTop = 0;
+
+                }
+
+                // Получаем значение правого края
+                rightEdge = document.body.offsetWidth - el.offsetWidth;
+                // Получаем значение нижнего края
+                bottomEdge = document.body.offsetHeight - el.offsetHeight;
+
+                // Не допускаем того, чтобы модальное окно выходило за край
+                if (newLeft > rightEdge) {
+
+                    newLeft = rightEdge;
+
+                }
+
+                if (newTop > bottomEdge) {
+
+                    newTop = bottomEdge;
+
+                }
+
+                // Записываем значения
+                el.style.left = newLeft + 'px';
+                el.style.top = newTop + 'px';
+
+            };
+
+            /**
+             * @function mouseMove
+             *
+             * Функция, вызывающая функцию moveAt, при движении мыши по экрану
+             *
+             * @param e
+             */
+            mouseMove = (e) => {
+
+                moveAt(e);
+
+            };
+
+            /**
+             * @function mouseUp
+             *
+             * Функция отписывает события onmousemove у документа и элемента модального окна
+             */
+            mouseUp = () => {
+
+                document.onmousemove = null;
+                document.removeEventListener('touchmove', mouseMove);
+
+                el.onmousemove = null;
+                el.removeEventListener('touchend', mouseUp);
+
+                el.style.zIndex = 8999;
+
+            };
+
+            // Выставляем стили к элементу модального окна
+            el.style.position = 'absolute';
+            el.style.zIndex = 9000;
+
+            moveAt(e);
+
+            // Вешаем обработчик события движения мыши внутри документа
+            document.onmousemove = mouseMove;
+            document.addEventListener('touchmove', mouseMove);
+            // При отжатии клавиши мыши отписываем события onmousemove, onmousemove
+            el.onmouseup = mouseUp;
+            el.addEventListener('touchend', mouseUp);
+
+        };
+
+        // Делегируем событие onmousedown на элементе модального окна
+        el.onmousedown = mouseDown;
+        el.addEventListener('touchstart', mouseDown);
+        // Отменяем всплытие события при нажатии клавиши мыши на контенте модального окна
+        modalBox.onmousedown = (event) => event.stopPropagation();
+        modalBox.addEventListener('touchstart', (event) => event.stopPropagation());
+        // Отменяем браузерное событие dragstart
+        el.ondragstart = () => false;
+
+        return draggableModal;
 
     }
 
@@ -494,6 +686,26 @@ class Popup {
             });
 
         }
+
+    }
+
+    /**
+     * @static
+     * @method getCoords
+     *
+     * Позволяет получить объект координат элемента на странице
+     *
+     * @param elem
+     * @returns {{top: number, left: number}}
+     */
+    static getCoords(elem) {
+
+        let box = elem.getBoundingClientRect();
+
+        return {
+            top: box.top + pageYOffset,
+            left: box.left + pageXOffset
+        };
 
     }
 

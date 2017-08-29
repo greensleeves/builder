@@ -7,6 +7,9 @@
 <body>
 
 <div id="popup">
+
+    <h1 class="text-center">Пример модуля модальных окон</h1>
+
     <ul class="list">
         <li class="list__item">
             <h2>Первый пример</h2>
@@ -65,10 +68,31 @@
             <h2>Шестой пример</h2>
             <ul class="sublist">
                 <li class="sublist__item">Открываем пользовательский компонент.</li>
-                <li class="sublist__item">Присутсвует динамический контент.</li>
+                <li class="sublist__item">Присутствует динамический контент.</li>
             </ul>
             <button class="tingle-btn tingle-btn--primary" v-on:click="sixthExample">Открой шестой пример</button>
         </li>
+
+        <li class="list__item">
+            <h2>Седьмой пример</h2>
+            <ul class="sublist">
+                <li class="sublist__item">Создаем модальное окно через метод Popup.makeDraggableModal.</li>
+                <li class="sublist__item">Открываем модальное окно.</li>
+                <li class="sublist__item">Можно подвигать модальное окно.</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="seventhExample">Открой седьмой пример</button>
+        </li>
+
+        <li class="list__item">
+            <h2>Восьмой пример</h2>
+            <ul class="sublist">
+                <li class="sublist__item">Создаем модальное окно.</li>
+                <li class="sublist__item">Открываем модальное окно.</li>
+                <li class="sublist__item">Показываем в модальном окне поочередно элементы с определенным контентом</li>
+            </ul>
+            <button class="tingle-btn tingle-btn--primary" v-on:click="eighthExample">Открой восьмой пример</button>
+        </li>
+
     </ul>
 </div>
 

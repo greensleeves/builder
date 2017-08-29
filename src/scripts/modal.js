@@ -10,6 +10,8 @@ let
     thirdExamplePopup,
     fourthExamplePopup,
     sixthExamplePopup,
+    seventhPopup,
+    eighthPopup,
 
     myComponent;
 
@@ -31,6 +33,18 @@ fourthExamplePopup = Popup.makeSinglePopup({
 
 // Создаем экземпляр шестого попапа
 sixthExamplePopup = Popup.makePopup();
+
+// Создаем экземпляр седьмого попапа
+seventhPopup = Popup.makeDraggableModal({
+    cssClass: ['tingle-modal--move'],
+    closeMethods: ['button', 'escape'],
+    footer: true
+});
+seventhPopup
+    .setContent('ModalBox content')
+    .setFooterContent('Footer content');
+
+eighthPopup = Popup.makePopup();
 
 // Создадим компонент для примера
 myComponent = Vue.extend({
@@ -108,12 +122,12 @@ myComponent = Vue.extend({
 new Vue({
     el: '#popup',
     methods: {
-        firstExample: function() {
+        firstExample: () => {
 
             firstExamplePopup
                 .open();
 
-            setTimeout(function() {
+            setTimeout(() => {
 
                 firstExamplePopup
                     .setContent('This is first example popup!');
@@ -122,13 +136,13 @@ new Vue({
 
 
         },
-        secondExample: function() {
+        secondExample: () => {
 
             secondExamplePopup
                 .setContent('<div>Привет! Я Гендальф Серый! Бегите, глупцы! <i class="icon icon--gray">&#9731;</i></div>')
                 .open();
 
-            setTimeout(function() {
+            setTimeout(() => {
 
                 secondExamplePopup
                     .destroy()
@@ -139,14 +153,14 @@ new Vue({
             }, 4000);
 
         },
-        thirdExample: function() {
+        thirdExample: () => {
 
             thirdExamplePopup
                 .setVueComponent(App)
                 .open();
 
         },
-        fourthExample: function() {
+        fourthExample: () => {
 
             fourthExamplePopup
                 .setVueComponent(App)
@@ -154,7 +168,7 @@ new Vue({
                 .open();
 
         },
-        fifthExample: function() {
+        fifthExample: () => {
 
             let timeoutId;
 
@@ -163,7 +177,7 @@ new Vue({
             thirdExamplePopup.open();
             fourthExamplePopup.open();
 
-            timeoutId = setTimeout(function() {
+            timeoutId = setTimeout(() => {
 
                 Popup.closeAllModals();
                 clearTimeout(timeoutId);
@@ -171,11 +185,30 @@ new Vue({
             }, 3000);
 
         },
-        sixthExample: function() {
+        sixthExample: () => {
 
             sixthExamplePopup
                 .setVueComponent(myComponent)
                 .open();
+
+        },
+        seventhExample: () => {
+
+            seventhPopup
+                .open();
+
+        },
+        eighthExample: () => {
+
+            eighthPopup
+                .open()
+                .sequence([
+                    '<div class="square square--red">1</div>',
+                    '<div class="square square--blue">2</div>',
+                    '<div class="square square--green">3</div>',
+                    '<div class="square square--orange">4</div>'
+                ], 1000, true);
+
 
         }
     }
