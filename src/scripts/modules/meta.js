@@ -1,6 +1,8 @@
-// @flow
+// flow
 
-// import { log } from './tools/log';
+import { log, logStyle } from './tools/log';
+
+let logC = logStyle('background: #ccc');
 
 const
 
@@ -51,6 +53,11 @@ const
     },
 
     Meta = () => {
+
+        log(['Мета: ', _meta, 2]);
+
+        logC(['Мета: ', _meta, 2]);
+        logC('Мета2');
 
         return _meta;
 

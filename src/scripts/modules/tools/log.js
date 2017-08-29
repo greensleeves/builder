@@ -35,7 +35,8 @@ const
             try {
 
                 // Передаем в консоль аргументы для вывода
-                console[type](...msg);
+                Array.isArray(msg) ? console[type](...msg) : console[type](msg);
+
 
             } catch (error) {
 
@@ -60,11 +61,11 @@ const
      */
     logStyle = (setup: string): Function => {
 
-        return (...arg): void => {
+        return (arg): void => {
 
             let argForLog: Array<any> = [`%c ${arg[0]}`, setup, ...arg.slice(1)];
 
-            log.call(null, argForLog);
+            log.call(null, [...argForLog]);
 
         };
 
