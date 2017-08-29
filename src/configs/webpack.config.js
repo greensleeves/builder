@@ -64,6 +64,13 @@ module.exports = {
 
     },
 
+    // resolve: {
+    //     extensions: ['.js'],
+    //     alias: {
+    //         Log: path.resolve(__dirname, '../scripts/modules/tools/log')
+    //     }
+    // },
+
     plugins: [
 
         // Пладин для компиляции flow
@@ -73,6 +80,12 @@ module.exports = {
         // Будет доступна и в js файлах
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        }),
+
+        new webpack.ProvidePlugin({
+            // log: 'log',
+            // log: 'Log',
+            // logStyle: ['../scripts/modules/tools/log', 'logStyle']
         })
 
     ],
