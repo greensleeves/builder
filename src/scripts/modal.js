@@ -2,12 +2,7 @@
 
 import Vue from 'vue';
 import App from '../blocks/main/app/scripts/App.vue';
-// import { log } from './modules/tools/log';
-import meta from './modules/meta';
 import Popup from './modules/popup/popup.js';
-
-meta();
-
 
 let
     firstExamplePopup,
@@ -37,11 +32,7 @@ fourthExamplePopup = Popup.makeSinglePopup({
 // Создаем экземпляр шестого попапа
 sixthExamplePopup = Popup.makePopup();
 
-/**
- * Инициализация компонента
- */
-new Vue(App).$mount('#app');
-
+// Создадим компонент для примера
 myComponent = Vue.extend({
     data: function() {
 

@@ -1,4 +1,5 @@
 # Игнорируем
+.idea
 node_modules
 dest
 prod

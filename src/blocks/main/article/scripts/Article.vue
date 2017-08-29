@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button @click="trigger">Показать</button>
+    <button @click="trigger">Показать!</button>
     <div v-if="show">
         <inner-comp></inner-comp>
     </div>

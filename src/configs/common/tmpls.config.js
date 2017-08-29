@@ -55,7 +55,19 @@ module.exports = {
                 //   }
                 // }
             ]
+        },
+
+        {
+            name: 'modal',
+            dest: {
+                dev: '/dest'
+            },
+            src: {
+                include: [
+                    './src/pages/data/modal.html'
+                ]
+            }
         }
 
     ]
-}
+};
