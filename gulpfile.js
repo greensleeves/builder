@@ -23,7 +23,7 @@ var
     configs;
 
 // Получаем конфиги для сборки
-configs = gulpFromConfig.getConfigs('./src/configs/common');
+configs = gulpFromConfig.getConfigs('./src/**/configs/gulp');
 
 // Формируем задачи для сборки
 tasks = gulpFromConfig.createTasks(gulp, configs);
