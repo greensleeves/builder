@@ -64,9 +64,6 @@ class Popup {
         // Номер модального окна
         this.counter = Popup.counter();
 
-        // Сохраняем ссылку на экземпляр модального окна
-        Popup.modals.push(this);
-
         // Формируем объект параметров модального окна на основе предустановленных
         this.popupParams = Object.assign({}, defaultParams, params);
 
@@ -82,6 +79,9 @@ class Popup {
 
         // Инициализируем модальное окно, но не показываем его
         this.init(false);
+
+        // Сохраняем ссылку на экземпляр модального окна
+        Popup.modals.push(this);
 
     }
 
@@ -415,6 +415,7 @@ class Popup {
     static makeDraggableModal(params = {}) {
 
         let el,
+            elDims,
             modalBox,
             mouseDown,
             draggableModal;
@@ -426,6 +427,10 @@ class Popup {
         el = draggableModal.modal.modal;
         // html-элемент содержимого модального окна
         modalBox = draggableModal.modal.modalBox;
+
+        // Получаем размеры элемента модального окна
+        // todo: дописать начальное позиционирование элемента относительно окна брауезера
+        elDims = Popup.dimentions(draggableModal.modal);
 
         /**
          * @function mouseDown
@@ -568,9 +573,11 @@ class Popup {
         // Делегируем событие onmousedown на элементе модального окна
         el.onmousedown = mouseDown;
         el.addEventListener('touchstart', mouseDown);
+
         // Отменяем всплытие события при нажатии клавиши мыши на контенте модального окна
         modalBox.onmousedown = (event) => event.stopPropagation();
         modalBox.addEventListener('touchstart', (event) => event.stopPropagation());
+
         // Отменяем браузерное событие dragstart
         el.ondragstart = () => false;
 
@@ -706,6 +713,50 @@ class Popup {
             top: box.top + pageYOffset,
             left: box.left + pageXOffset
         };
+
+    }
+
+    /**
+     * @static
+     * @method dimentions
+     *
+     * Позволяет получить размеры модального окна
+     *
+     * @param modal - Экземпляр модального окна
+     * @returns {{width: null, height: null}|*}
+     */
+    static dimentions(modal) {
+
+        let dim, popup;
+
+        popup = modal;
+
+        dim = {
+            width: null,
+            height: null
+        };
+
+        if ( !popup.isOpen() ) {
+
+            document.body.classList.add('tingle-enabled');
+            popup.modal.classList.add('tingle-modal--visible');
+            popup.modal.style.display = 'block';
+
+            dim.width = popup.modal.offsetWidth;
+            dim.height = popup.modal.offsetHeight;
+
+            document.body.classList.remove('tingle-enabled');
+            popup.modal.classList.remove('tingle-modal--visible');
+            popup.modal.style.display = 'none';
+
+        } else {
+
+            dim.width = popup.modal.offsetWidth;
+            dim.height = popup.modal.offsetHeight;
+
+        }
+
+        return dim;
 
     }
 
