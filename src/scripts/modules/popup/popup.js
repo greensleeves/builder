@@ -418,7 +418,8 @@ class Popup {
             elDims,
             modalBox,
             mouseDown,
-            draggableModal;
+            draggableModal,
+            moveToCenter;
 
         // Экземпляр модального окна
         draggableModal = Popup.makePopup(params);
@@ -429,8 +430,20 @@ class Popup {
         modalBox = draggableModal.modal.modalBox;
 
         // Получаем размеры элемента модального окна
-        // todo: дописать начальное позиционирование элемента относительно окна брауезера
         elDims = Popup.dimentions(draggableModal.modal);
+
+        // Функция выставляет модальное окно в центр окна браузера
+        moveToCenter = () => {
+
+            el.style.left = Math.round(window.innerWidth / 2 - elDims.width / 2) + 'px';
+            el.style.top = Math.round((window.pageYOffset + window.innerHeight / 2) - elDims.height / 2) + 'px';
+
+        };
+
+        moveToCenter();
+
+        window.addEventListener('scroll', moveToCenter);
+        window.addEventListener('resize', moveToCenter);
 
         /**
          * @function mouseDown
